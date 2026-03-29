@@ -149,6 +149,12 @@
 }
 */
 
+.logo-img {
+  height: 100px;
+  width: auto;
+  display: block;
+}
+
 /* ── Main content area ────────────────────────────────── */
 .main-content {
   flex: 1;
