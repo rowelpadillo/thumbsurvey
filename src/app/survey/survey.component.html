@@ -1,0 +1,145 @@
+<!-- src/app/survey/survey.component.html -->
+<div class="page"
+  [class.page--celebrate]="state === 'celebrate' || state === 'success' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)"
+  [class.page--sorry]="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
+
+  <!-- Particles -->
+  <div class="particle-layer" aria-hidden="true">
+    <ng-container *ngIf="state === 'celebrate' || state === 'success' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)">
+      <div *ngFor="let p of particles" class="confetti-piece"
+        [ngClass]="'shape-' + p.shape"
+        [style.left.%]="p.x"
+        [style.background]="p.shape !== 'triangle' ? p.color : 'transparent'"
+        [style.border-bottom-color]="p.shape === 'triangle' ? p.color : null"
+        [style.width.px]="p.size" [style.height.px]="p.size"
+        [style.animation-delay.ms]="p.delay"
+        [style.animation-duration.ms]="p.duration"
+        [style.--rot]="p.angle + 'deg'">
+      </div>
+    </ng-container>
+    <ng-container *ngIf="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
+      <div *ngFor="let t of teardrops" class="teardrop"
+        [style.left.%]="t.x"
+        [style.animation-delay.ms]="t.delay"
+        [style.animation-duration.ms]="t.duration">
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Navy top accent bar -->
+  <div class="top-bar"></div>
+
+  <!-- Header with logo placeholder -->
+  <header class="site-header">
+    <a class="logo-slot" href="#" aria-label="VECO Home">
+      <!-- Replace the div below with: <img class="logo-img" src="assets/veco-logo.png" alt="Visayan Electric"> -->
+      <img class="logo-img" src="assets/visayan-electric-1.png" alt="Visayan Electric">
+    </a>
+  </header>
+
+  <!-- Main survey content -->
+  <div class="main-content">
+    <div class="card"
+      [class.card--wide]="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
+
+      <!-- ══ IDLE ══════════════════════════════════════════ -->
+      <ng-container *ngIf="state === 'idle'">
+        <div class="survey-title-block">
+          <div class="survey-brand">
+            <span class="survey-brand-dot"></span>
+            VECO Customer Service
+          </div>
+          <h1 class="survey-main-title">
+            How satisfied are you with<br>
+            <span class="survey-highlight">our service today?</span>
+          </h1>
+          <div class="survey-divider"></div>
+        </div>
+        <p class="prompt">Tap to rate your experience</p>
+        <div class="thumbs-row">
+          <button
+            *ngFor="let r of ratings"
+            class="thumb-btn"
+            [class.thumb-btn--up]="r.value >= 3"
+            [class.thumb-btn--down]="r.value < 3"
+            [class.thumb-btn--double]="r.value === 4 || r.value === 1"
+            (click)="selectRating(r)"
+            [attr.aria-label]="r.label">
+            <span class="thumb-emoji">{{ r.emoji }}</span>
+            <span class="thumb-label">{{ r.label }}</span>
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- ══ CELEBRATE ══════════════════════════════════════ -->
+      <ng-container *ngIf="state === 'celebrate' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)">
+        <div class="response-screen response-screen--celebrate">
+          <div class="big-emoji pop-in">{{ selectedRating?.emoji }}</div>
+          <ng-container *ngIf="state === 'celebrate'">
+            <h2 class="response-title slide-up">Thank You!</h2>
+            <p class="response-sub slide-up delay-1">We're glad you had a great experience.</p>
+            <button class="submit-btn submit-btn--celebrate slide-up delay-2" (click)="submit()">
+              Send Feedback ✓
+            </button>
+          </ng-container>
+          <ng-container *ngIf="state === 'submitting'">
+            <h2 class="response-title">Sending…</h2>
+            <div class="spinner-row"><span class="spinner spinner--dark"></span></div>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <!-- ══ SORRY ══════════════════════════════════════════ -->
+      <ng-container *ngIf="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
+        <div class="response-screen response-screen--sorry">
+          <div class="big-emoji shake">{{ selectedRating?.emoji }}</div>
+          <h2 class="response-title slide-up">We're Sorry</h2>
+          <p class="response-sub slide-up delay-1">Your feedback helps us do better.</p>
+          <div class="comment-block slide-up delay-2">
+            <label for="comment" class="comment-label">What can we do to improve?</label>
+            <textarea id="comment"
+              [formControl]="$any(form.get('comment'))"
+              rows="4"
+              placeholder="Tell us what went wrong or what you'd like to see improved…"
+              maxlength="500"
+              [readonly]="state === 'submitting'">
+            </textarea>
+            <span class="char-count">{{ commentLength }}/500</span>
+          </div>
+          <button class="submit-btn submit-btn--sorry slide-up delay-3"
+            (click)="submit()"
+            [disabled]="state === 'submitting'">
+            <span *ngIf="state !== 'submitting'">Submit Feedback</span>
+            <span *ngIf="state === 'submitting'" class="spinner-row">
+              <span class="spinner"></span> Sending…
+            </span>
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- ══ SUCCESS ════════════════════════════════════════ -->
+      <ng-container *ngIf="state === 'success'">
+        <div class="response-screen response-screen--celebrate">
+          <div class="big-emoji pop-in">🎉</div>
+          <h2 class="response-title slide-up">All Done!</h2>
+          <p class="response-sub slide-up delay-1">Your response has been recorded. Thank you!</p>
+          <button class="submit-btn submit-btn--celebrate slide-up delay-2" (click)="reset()">
+            Submit Another Response
+          </button>
+        </div>
+      </ng-container>
+
+      <!-- ══ ERROR ══════════════════════════════════════════ -->
+      <ng-container *ngIf="state === 'error'">
+        <div class="response-screen response-screen--error">
+          <div class="big-emoji">⚠️</div>
+          <h2 class="response-title">Oops!</h2>
+          <p class="response-sub">{{ errorMsg }}</p>
+          <button class="submit-btn submit-btn--sorry" (click)="reset()">Try Again</button>
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+
+</div>
