@@ -60,12 +60,26 @@
           <button
             *ngFor="let r of ratings"
             class="thumb-btn"
-            [class.thumb-btn--up]="r.value >= 3"
-            [class.thumb-btn--down]="r.value < 3"
-            [class.thumb-btn--double]="r.value === 4 || r.value === 1"
+            [class.thumb-btn--double]="r.count === 2"
+            [style.--btn-color]="r.color"
+            [style.--btn-bg]="r.colorBg"
             (click)="selectRating(r)"
             [attr.aria-label]="r.label">
-            <span class="thumb-emoji">{{ r.emoji }}</span>
+
+            <!-- SVG thumb icons — colored via iconColor -->
+            <span class="thumb-icon-row">
+              <svg *ngFor="let i of (r.count === 2 ? [1,2] : [1])"
+                class="thumb-svg"
+                [class.thumb-svg--down]="r.direction === 'down'"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"
+                  [attr.fill]="r.iconColor"
+                />
+              </svg>
+            </span>
+
             <span class="thumb-label">{{ r.label }}</span>
           </button>
         </div>
@@ -83,7 +97,7 @@
             </button>
           </ng-container>
           <ng-container *ngIf="state === 'submitting'">
-            <h2 class="response-title">Sending…</h2>
+            <h2 class="response-title">Thank you so much!</h2>
             <div class="spinner-row"><span class="spinner spinner--dark"></span></div>
           </ng-container>
         </div>
