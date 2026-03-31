@@ -243,6 +243,53 @@
   margin: 0 0 1.5rem;
 }
 
+/* ── Ticket input ─────────────────────────────────────── */
+.ticket-input-block {
+  margin-top: 1.25rem;
+  width: 100%;
+}
+
+.ticket-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.45rem;
+}
+
+.optional-tag {
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: var(--muted);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.ticket-input {
+  width: 100%;
+  background: #fafbff;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.7rem 1rem;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.ticket-input::placeholder { color: #b0bac8; }
+
+.ticket-input:focus {
+  outline: none;
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(30,45,107,0.1);
+}
+
 /* ── Thumbs row ───────────────────────────────────────── */
 .thumbs-row {
   display: flex;

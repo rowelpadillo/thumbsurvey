@@ -21,7 +21,7 @@ serve(async (req: Request) => {
 
   try {
     const body = await req.json();
-    const { branch, rating, label, comment } = body;
+    const { branch, rating, label, comment, ticketNum } = body;
 
     // ── Validate ───────────────────────────────────────────────────────────
     if (!branch || typeof branch !== "string") {
@@ -65,7 +65,8 @@ serve(async (req: Request) => {
               location:     branch,
               is_satisfied: isSatisfied,
               feedback:     comment?.trim() ?? "",
-              survey_at:    new Date().toISOString(),
+              ticket_num:   ticketNum?.trim() ?? "",
+              survey_at: new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' }),
             },
           ],
         }),

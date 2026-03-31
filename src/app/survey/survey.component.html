@@ -58,6 +58,23 @@
             <span class="survey-highlight">our service today?</span>
           </h1>
           <div class="survey-divider"></div>
+
+          <!-- ── Ticket Number (optional) ── -->
+          <div class="ticket-input-block">
+            <label for="ticketNum" class="ticket-label">
+              Ticket / Reference No. <span class="optional-tag">optional</span>
+            </label>
+            <input
+              id="ticketNum"
+              type="text"
+              class="ticket-input"
+              [formControl]="$any(form.get('ticketNum'))"
+              placeholder="e.g. TKT-2026-00123"
+              autocomplete="off"
+              maxlength="50"
+            />
+          </div>
+
         </div>
         <p class="prompt">Tap to rate your experience</p>
         <div class="thumbs-row">

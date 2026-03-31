@@ -118,6 +118,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
 
   this.form = this.fb.group({
     comment: ['', Validators.maxLength(500)],
+    ticketNum: ['', Validators.maxLength(50)],
   });
 }
 
@@ -231,6 +232,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
         rating:  this.selectedRating.value,
         label:   this.selectedRating.label,
         comment: this.form.get('comment')?.value?.trim() || '',
+        ticketNum: this.form.get('ticketNum')?.value?.trim() || '',
       }),
     })
     .then(res => res.json())
