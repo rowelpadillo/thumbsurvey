@@ -8,7 +8,8 @@ export type AppState =
   | 'sorry'
   | 'submitting'
   | 'success'
-  | 'error';
+  | 'error'
+  | 'invalid-branch';
 
 export interface RatingOption {
   value: 1 | 2 | 3 | 4;
@@ -32,6 +33,17 @@ export interface Particle {
   shape: 'circle' | 'rect' | 'triangle';
 }
 
+const BRANCHES: Record<string, string> = {
+  'jakosalem':   'Jakosalem Service Center',
+  'parkmall':     'Parkmall Service Center',
+  'liloan':      'Liloan Service Center',
+  'banilad':        'Banilad Service Center',
+  'talisay':     'Talisay Service Center',
+  'banawa': 'Banawa Service Center',
+  'naga':        'Naga Service Center',
+};
+
+
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
@@ -46,6 +58,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
   particles: Particle[] = [];
   teardrops: { x: number; delay: number; duration: number }[] = [];
   private animTimer: any;
+
+  branchName = '';
+  branchKey = '';
 
   // // ✏️ To change thumb color: edit iconColor (any valid CSS color)
   // // ✏️ To change hover accent: edit color + colorBg
@@ -64,25 +79,47 @@ export class SurveyComponent implements OnInit, OnDestroy {
   // ✏️ To change hover accent: edit color + colorBg
   ratings: RatingOption[] = [
     // DARK ORANGE (Two Thumbs Down)
-    { value: 1, emoji: '👎👎', label: 'Two Thumbs Down', color: '#ea580c', colorBg: '#fff7ed', iconColor: '#ea580c', count: 2, direction: 'down' },
+    // { value: 1, emoji: '👎👎', label: 'Two Thumbs Down', color: '#ea580c', colorBg: '#fff7ed', iconColor: '#ea580c', count: 2, direction: 'down' },
     
     // ORANGE (Thumbs Down)
-    { value: 2, emoji: '👎',   label: 'Thumbs Down',     color: '#f97316', colorBg: '#fff7ed', iconColor: '#f97316', count: 1, direction: 'down' },
+    { value: 2, emoji: '👎',   label: 'Unsatisfied',     color: '#f97316', colorBg: '#fff7ed', iconColor: '#f97316', count: 1, direction: 'down' },
     
     // LIGHT GREEN (Thumbs Up)
-    { value: 3, emoji: '👍',   label: 'Thumbs Up',       color: '#4ade80', colorBg: '#f0fdf4', iconColor: '#4ade80', count: 1, direction: 'up'   },
+    { value: 3, emoji: '👍',   label: 'Satisfied',       color: '#4ade80', colorBg: '#f0fdf4', iconColor: '#4ade80', count: 1, direction: 'up'   },
 
     // GREEN (Two Thumbs Up)
-    { value: 4, emoji: '👍👍', label: 'Two Thumbs Up',   color: '#16a34a', colorBg: '#f0fdf4', iconColor: '#16a34a', count: 2, direction: 'up'   },
+    // { value: 4, emoji: '👍👍', label: 'Two Thumbs Up',   color: '#16a34a', colorBg: '#f0fdf4', iconColor: '#16a34a', count: 2, direction: 'up'   },
   ];
 
   constructor(private fb: FormBuilder) {}
 
+  // ngOnInit(): void {
+  //   this.form = this.fb.group({
+  //     comment: ['', Validators.maxLength(500)],
+  //   });
+  // }
+
+
   ngOnInit(): void {
-    this.form = this.fb.group({
-      comment: ['', Validators.maxLength(500)],
-    });
+  const params = new URLSearchParams(window.location.search);
+  const key = params.get('branch')?.toLowerCase().trim() ?? '';
+
+  if (key && BRANCHES[key]) {
+    this.branchKey  = key;
+    this.branchName = BRANCHES[key];
+  } else if (key) {
+    // Has a branch param but it's not in the list
+    this.state = 'invalid-branch';
+  } else {
+    // No branch param at all — use default (good for local dev)
+    this.branchKey  = 'banilad';
+    this.branchName = BRANCHES['banilad'];
   }
+
+  this.form = this.fb.group({
+    comment: ['', Validators.maxLength(500)],
+  });
+}
 
   ngOnDestroy(): void { clearTimeout(this.animTimer); }
 
@@ -141,20 +178,67 @@ export class SurveyComponent implements OnInit, OnDestroy {
     return this.form.get('comment')?.value?.length ?? 0;
   }
 
+  // submit(): void {
+  //   if (this.state === 'submitting' || !this.selectedRating) return;
+  //   this.state = 'submitting';
+
+  //   // 🎉 Trigger confetti immediately if it's a positive rating!
+  //   if (this.selectedRating.value >= 3) {
+  //     this.spawnConfetti();
+  //   }
+
+  //   // ⏳ Simulated submit — replace with real API call when Supabase is ready
+  //   this.animTimer = setTimeout(() => {
+  //     this.state = 'success';
+  //     this.spawnConfetti();
+  //   }, 1500);
+  // }
+
+  // submit(): void {
+  //   if (this.state === 'submitting' || !this.selectedRating) return;
+  //   this.state = 'submitting';
+
+  //   fetch('https://tinwiwrhvexmwrctihdh.supabase.co/functions/v1/submitSurvey', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify({
+  //       branch:  this.branchKey,
+  //       rating:  this.selectedRating.value,
+  //       label:   this.selectedRating.label,
+  //       comment: this.form.get('comment')?.value?.trim() || '',
+  //     }),
+  //   })
+  //   .then(res => res.json())
+  //   .then(() => { this.state = 'success'; this.spawnConfetti(); })
+  //   .catch(() => {
+  //     this.state = 'error';
+  //     this.errorMsg = 'Submission failed. Please try again.';
+  //   });
+  // }
+
   submit(): void {
     if (this.state === 'submitting' || !this.selectedRating) return;
     this.state = 'submitting';
 
-    // 🎉 Trigger confetti immediately if it's a positive rating!
-    if (this.selectedRating.value >= 3) {
-      this.spawnConfetti();
-    }
-
-    // ⏳ Simulated submit — replace with real API call when Supabase is ready
-    this.animTimer = setTimeout(() => {
-      this.state = 'success';
-      this.spawnConfetti();
-    }, 1500);
+    fetch('https://tinwiwrhvexmwrctihdh.supabase.co/functions/v1/submitSurvey', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'BeyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpbndpd3JodmV4bXdyY3RpaGRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMzgyNDUsImV4cCI6MjA4OTkxNDI0NX0.t12NPSjXjqf4XI4b-nchpZY5ebFANS8t8fo3dbyZysY',  // ← paste anon key here
+      },
+      body: JSON.stringify({
+        branch:  this.branchKey,
+        rating:  this.selectedRating.value,
+        label:   this.selectedRating.label,
+        comment: this.form.get('comment')?.value?.trim() || '',
+      }),
+    })
+    .then(res => res.json())
+    .then(() => { this.state = 'success'; this.spawnConfetti(); })
+    .catch(() => {
+      this.state = 'error';
+      this.errorMsg = 'Submission failed. Please try again.';
+    });
   }
 
   reset(): void {

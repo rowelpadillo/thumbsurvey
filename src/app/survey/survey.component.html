@@ -45,9 +45,13 @@
       <!-- ══ IDLE ══════════════════════════════════════════ -->
       <ng-container *ngIf="state === 'idle'">
         <div class="survey-title-block">
-          <div class="survey-brand">
+          <!-- <div class="survey-brand">
             <span class="survey-brand-dot"></span>
             VECO Customer Service
+          </div> -->
+          <div class="survey-brand">
+            <span class="survey-brand-dot"></span>
+            {{ branchName }}
           </div>
           <h1 class="survey-main-title">
             How satisfied are you with<br>
@@ -150,6 +154,15 @@
           <h2 class="response-title">Oops!</h2>
           <p class="response-sub">{{ errorMsg }}</p>
           <button class="submit-btn submit-btn--sorry" (click)="reset()">Try Again</button>
+        </div>
+      </ng-container>
+
+      <!-- ══ INVALID BRANCH ════════════════════════════════ -->
+      <ng-container *ngIf="state === 'invalid-branch'">
+        <div class="response-screen response-screen--error">
+          <div class="big-emoji">🔗</div>
+          <h2 class="response-title">Invalid Link</h2>
+          <p class="response-sub">Please use the QR code provided at your branch.</p>
         </div>
       </ng-container>
 
