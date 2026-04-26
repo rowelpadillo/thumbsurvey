@@ -549,3 +549,82 @@ textarea:focus {
   .response-title { font-size: 1.5rem; }
   .site-header    { padding: 0 1rem; }
 }
+
+
+/* postiive button pills */
+/* Tightened up the spacing so the card doesn't get too tall */
+.feedback-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;           /* Reduced from 10px */
+  margin: 12px 0;     /* Reduced from 20px */
+  justify-content: center;
+}
+
+.pill-btn {
+  padding: 8px 14px;  /* Made the buttons slightly less tall */
+  border: 1px solid #cbd5e1;
+  border-radius: 25px;
+  background-color: #f8fafc;
+  color: #334155;
+  font-size: 13px;    /* Slightly smaller font */
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pill-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.pill-btn.selected {
+  background-color: #16a34a; 
+  color: white;
+  border-color: #16a34a;
+  box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.2);
+}
+
+textarea {
+  width: 100%;
+  margin-top: 5px;    /* Reduced from 15px */
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  resize: none;       /* Prevents the user from dragging the box taller */
+}
+
+
+
+/* list of branchers */
+/* Update your existing site-header if it doesn't already have flexbox */
+.site-header {
+  display: flex;
+  justify-content: space-between; /* Pushes logo left, dropdown right */
+  align-items: center;
+  padding: 15px 20px; /* Adjust this padding to match your layout */
+  position: relative;
+  z-index: 10;
+}
+
+/* Style the new dropdown */
+.branch-selector select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background-color: white;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.branch-selector select:hover {
+  border-color: #94a3b8;
+}
+
+.branch-selector select:focus {
+  border-color: #16a34a; /* Visayan Electric green focus ring */
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+}

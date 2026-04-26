@@ -30,11 +30,28 @@
   <div class="top-bar"></div>
 
   <!-- Header with logo placeholder -->
+  <!-- <header class="site-header">
+    <a class="logo-slot" href="#" aria-label="VECO Home"> -->
+      <!-- Replace the div below with: <img class="logo-img" src="assets/veco-logo.png" alt="Visayan Electric"> -->
+      <!-- <img class="logo-img" src="assets/visayan-electric-1.png" alt="Visayan Electric">
+    </a>
+  </header> -->
+
   <header class="site-header">
     <a class="logo-slot" href="#" aria-label="VECO Home">
-      <!-- Replace the div below with: <img class="logo-img" src="assets/veco-logo.png" alt="Visayan Electric"> -->
       <img class="logo-img" src="assets/visayan-electric-1.png" alt="Visayan Electric">
     </a>
+
+    <div class="branch-selector">
+      <select (change)="changeBranch($event)">
+        <option 
+          *ngFor="let branch of availableBranches" 
+          [value]="branch.key" 
+          [selected]="branch.key === branchKey">
+          {{ branch.name }}
+        </option>
+      </select>
+    </div>
   </header>
 
   <!-- Main survey content -->
@@ -59,17 +76,17 @@
           </h1>
           <div class="survey-divider"></div>
 
-          <!-- ── Ticket Number (optional) ── -->
+          <!-- ── Phone Number (optional) ── -->
           <div class="ticket-input-block">
             <label for="ticketNum" class="ticket-label">
-              Ticket / Reference No. <span class="optional-tag">optional</span>
+              Phone Number <span class="optional-tag">optional</span>
             </label>
             <input
               id="ticketNum"
               type="text"
               class="ticket-input"
               [formControl]="$any(form.get('ticketNum'))"
-              placeholder="e.g. TKT-2026-00123"
+              placeholder="e.g. 09334445567"
               autocomplete="off"
               maxlength="50"
             />
@@ -107,7 +124,7 @@
       </ng-container>
 
       <!-- ══ CELEBRATE ══════════════════════════════════════ -->
-      <ng-container *ngIf="state === 'celebrate' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)">
+      <!-- <ng-container *ngIf="state === 'celebrate' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)">
         <div class="response-screen response-screen--celebrate">
           <div class="big-emoji pop-in">{{ selectedRating?.emoji }}</div>
           <ng-container *ngIf="state === 'celebrate'">
@@ -117,6 +134,47 @@
               Send Feedback ✓
             </button>
           </ng-container>
+          <ng-container *ngIf="state === 'submitting'">
+            <h2 class="response-title">Thank you so much!</h2>
+            <div class="spinner-row"><span class="spinner spinner--dark"></span></div>
+          </ng-container>
+        </div>
+      </ng-container> -->
+
+      <ng-container *ngIf="state === 'celebrate' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)">
+        <div class="response-screen response-screen--celebrate">
+          <div class="big-emoji pop-in">{{ selectedRating?.emoji }}</div>
+          
+          <ng-container *ngIf="state === 'celebrate'">
+            <h2 class="response-title slide-up">Thank You!</h2>
+            <p class="response-sub slide-up delay-1">We're glad you had a great experience.<br>What service were you satisfied with?</p>
+            
+            <div class="feedback-pills slide-up delay-1">
+              <button 
+                type="button" 
+                *ngFor="let option of positiveFeedbackOptions"
+                (click)="selectPositiveFeedback(option)"
+                [class.selected]="form.get('comment')?.value === option"
+                class="pill-btn">
+                {{ option }}
+              </button>
+            </div>
+
+            <!-- <div class="comment-block slide-up delay-2" style="text-align: left; margin-top: 15px;"> -->
+              <div class="comment-block slide-up delay-2" style="text-align: left; margin-top: 5px;">
+              <textarea id="comment-positive"
+                [formControl]="$any(form.get('comment'))"
+                rows="2"
+                placeholder="Any other comments? (Optional)"
+                maxlength="500">
+              </textarea>
+            </div>
+
+            <button class="submit-btn submit-btn--celebrate slide-up delay-2" (click)="submit()">
+              Send Feedback ✓
+            </button>
+          </ng-container>
+
           <ng-container *ngIf="state === 'submitting'">
             <h2 class="response-title">Thank you so much!</h2>
             <div class="spinner-row"><span class="spinner spinner--dark"></span></div>

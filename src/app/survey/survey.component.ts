@@ -62,6 +62,19 @@ export class SurveyComponent implements OnInit, OnDestroy {
   branchName = '';
   branchKey = '';
 
+  // Expose the branches to the HTML template
+  availableBranches = Object.entries(BRANCHES).map(([key, name]) => ({ key, name }));
+
+  // Function to update the branch when the dropdown changes
+  changeBranch(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const newKey = selectElement.value;
+    
+    // Update the internal state to the newly selected branch
+    this.branchKey = newKey;
+    this.branchName = BRANCHES[newKey] || newKey;
+  }
+
   // // ✏️ To change thumb color: edit iconColor (any valid CSS color)
   // // ✏️ To change hover accent: edit color + colorBg
   // ratings: RatingOption[] = [
@@ -216,6 +229,26 @@ export class SurveyComponent implements OnInit, OnDestroy {
   //     this.errorMsg = 'Submission failed. Please try again.';
   //   });
   // }
+
+  // for positive feedback
+  // Add this array of options (you can customize these electric services!)
+  positiveFeedbackOptions: string[] = [
+    'Fast Reconnection/Connection',
+    'Friendly Staff',
+    'Clear Billing Explanation',
+    'Quick Issue Resolution',
+    'Smooth Application Process'
+  ];
+
+  // Add this function to handle when a user clicks a feedback button
+  selectPositiveFeedback(option: string): void {
+    // This updates the existing form 'comment' control with the button's text
+    this.form.patchValue({
+      comment: option
+    });
+  }
+
+  // ==========================================
 
   submit(): void {
     if (this.state === 'submitting' || !this.selectedRating) return;
