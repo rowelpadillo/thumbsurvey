@@ -92,10 +92,15 @@ export class SurveyComponent implements OnInit, OnDestroy {
   // ✏️ To change hover accent: edit color + colorBg
   ratings: RatingOption[] = [
     // DARK ORANGE (Two Thumbs Down)
-     { value: 1, emoji: '👎👎', label: 'Two Thumbs Down', color: '#ea580c', colorBg: '#fff7ed', iconColor: '#ea580c', count: 2, direction: 'down' },
+    //  { value: 1, emoji: '👎👎', label: 'Two Thumbs Down', color: '#ea580c', colorBg: '#fff7ed', iconColor: '#ea580c', count: 2, direction: 'down' },
     
-    // ORANGE (Thumbs Down)
-    { value: 2, emoji: '👎',   label: 'Unsatisfied',     color: '#f97316', colorBg: '#fff7ed', iconColor: '#f97316', count: 1, direction: 'down' },
+    // // ORANGE (Thumbs Down)
+    // { value: 2, emoji: '👎',   label: 'Unsatisfied',     color: '#f97316', colorBg: '#fff7ed', iconColor: '#f97316', count: 1, direction: 'down' },
+    // DARK RED (Two Thumbs Down)
+    { value: 1, emoji: '👎👎', label: 'Two Thumbs Down', color: '#dc2626', colorBg: '#fef2f2', iconColor: '#dc2626', count: 2, direction: 'down' },
+    
+    // RED (Unsatisfied)
+    { value: 2, emoji: '👎',   label: 'Unsatisfied',     color: '#ef4444', colorBg: '#fef2f2', iconColor: '#ef4444', count: 1, direction: 'down' },
     
     // LIGHT GREEN (Thumbs Up)
     { value: 3, emoji: '👍',   label: 'Satisfied',       color: '#4ade80', colorBg: '#f0fdf4', iconColor: '#4ade80', count: 1, direction: 'up'   },
