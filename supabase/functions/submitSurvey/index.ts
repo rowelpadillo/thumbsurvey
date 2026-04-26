@@ -44,7 +44,8 @@ serve(async (req: Request) => {
     // ── Map rating number → is_satisfied value ─────────────────────────────
     // Adjust these values to match what your AppSheet Yes/No column expects
     //const isSatisfied = Number(rating) >= 3 ? "Yes" : "No";
-    const isSatisfied = Number(rating) >= 3 ? 2 : 1;
+    //const isSatisfied = Number(rating) >= 3 ? 2 : 1;
+    const isSatisfied = String(rating);
 
     // ── Call AppSheet API ──────────────────────────────────────────────────
     const appsheetRes = await fetch(

@@ -79,7 +79,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   // ✏️ To change hover accent: edit color + colorBg
   ratings: RatingOption[] = [
     // DARK ORANGE (Two Thumbs Down)
-    // { value: 1, emoji: '👎👎', label: 'Two Thumbs Down', color: '#ea580c', colorBg: '#fff7ed', iconColor: '#ea580c', count: 2, direction: 'down' },
+     { value: 1, emoji: '👎👎', label: 'Two Thumbs Down', color: '#ea580c', colorBg: '#fff7ed', iconColor: '#ea580c', count: 2, direction: 'down' },
     
     // ORANGE (Thumbs Down)
     { value: 2, emoji: '👎',   label: 'Unsatisfied',     color: '#f97316', colorBg: '#fff7ed', iconColor: '#f97316', count: 1, direction: 'down' },
@@ -88,7 +88,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
     { value: 3, emoji: '👍',   label: 'Satisfied',       color: '#4ade80', colorBg: '#f0fdf4', iconColor: '#4ade80', count: 1, direction: 'up'   },
 
     // GREEN (Two Thumbs Up)
-    // { value: 4, emoji: '👍👍', label: 'Two Thumbs Up',   color: '#16a34a', colorBg: '#f0fdf4', iconColor: '#16a34a', count: 2, direction: 'up'   },
+     { value: 4, emoji: '👍👍', label: 'Two Thumbs Up',   color: '#16a34a', colorBg: '#f0fdf4', iconColor: '#16a34a', count: 2, direction: 'up'   },
   ];
 
   constructor(private fb: FormBuilder) {}
@@ -124,33 +124,33 @@ export class SurveyComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void { clearTimeout(this.animTimer); }
 
-  // selectRating(r: RatingOption): void {
-  //   this.selectedRating = r;
-  //   this.particles = [];
-  //   this.teardrops = [];
-  //   if (r.value >= 3) {
-  //     this.state = 'celebrate';
-  //     this.spawnConfetti();
-  //   } else {
-  //     this.state = 'sorry';
-  //     this.spawnTeardrops();
-  //   }
-  // }
-
   selectRating(r: RatingOption): void {
     this.selectedRating = r;
     this.particles = [];
     this.teardrops = [];
-    
     if (r.value >= 3) {
-      // FOR THUMBS UP: Skip the celebrate screen and automatically submit!
-      this.submit();
+      this.state = 'celebrate';
+      this.spawnConfetti();
     } else {
-      // FOR THUMBS DOWN: Keep the "We're Sorry" screen so they can type a comment
       this.state = 'sorry';
       this.spawnTeardrops();
     }
   }
+
+  // selectRating(r: RatingOption): void {
+  //   this.selectedRating = r;
+  //   this.particles = [];
+  //   this.teardrops = [];
+    
+  //   if (r.value >= 3) {
+  //     // FOR THUMBS UP: Skip the celebrate screen and automatically submit!
+  //     this.submit();
+  //   } else {
+  //     // FOR THUMBS DOWN: Keep the "We're Sorry" screen so they can type a comment
+  //     this.state = 'sorry';
+  //     this.spawnTeardrops();
+  //   }
+  // }
 
   spawnConfetti(): void {
     const colors = ['#fbbf24','#34d399','#60a5fa','#f472b6','#a78bfa','#fb923c','#f43f5e','#38bdf8'];
