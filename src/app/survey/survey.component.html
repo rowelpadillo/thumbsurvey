@@ -1,4 +1,7 @@
 <!-- src/app/survey/survey.component.html -->
+ <!-- mobile view fix landscape and portrait, qrcode need to fix -->
+  <!-- dashboard in appsheet for reporting -->
+   <!-- user to access the survey report  -->
 <div class="page"
   [class.page--celebrate]="state === 'celebrate' || state === 'success' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)"
   [class.page--sorry]="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
