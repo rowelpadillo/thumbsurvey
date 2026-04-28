@@ -17,7 +17,7 @@ export interface RatingOption {
   label: string;
   color: string;       // border + hover accent color
   colorBg: string;     // hover background tint
-  iconColor: string;   // ✏️ the actual thumb SVG fill color — change this freely!
+  iconColor: string;   
   count: 1 | 2;        // how many thumbs to show
   direction: 'up' | 'down';
 }
