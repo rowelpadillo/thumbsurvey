@@ -95,6 +95,25 @@
             />
           </div>
 
+          <!-- ── Phone Number (optional) ── ADD THIS BELOW -->
+          <div class="ticket-input-block">
+            <label for="phoneNum" class="ticket-label">
+              Phone Number <span class="optional-tag">optional</span>
+            </label>
+            <div class="phone-input-wrapper">
+              <span class="phone-prefix">🇵🇭 +63</span>
+              <input
+                id="phoneNum"
+                type="tel"
+                class="ticket-input phone-input"
+                [formControl]="$any(form.get('phoneNum'))"
+                placeholder="9XX XXX XXXX"
+                autocomplete="tel"
+                maxlength="10"
+              />
+            </div>
+          </div>
+
         </div>
         <p class="prompt">Tap to rate your experience</p>
         <div class="thumbs-row">
