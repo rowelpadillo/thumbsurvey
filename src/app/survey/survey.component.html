@@ -82,14 +82,14 @@
           <!-- ── Phone Number (optional) ── -->
           <div class="ticket-input-block">
             <label for="ticketNum" class="ticket-label">
-              Phone Number <span class="optional-tag">optional</span>
+              Ticket Number <span class="optional-tag">optional</span>
             </label>
             <input
               id="ticketNum"
               type="text"
               class="ticket-input"
               [formControl]="$any(form.get('ticketNum'))"
-              placeholder="e.g. 09334445567"
+              placeholder="e.g. Ticket-123199"
               autocomplete="off"
               maxlength="50"
             />
