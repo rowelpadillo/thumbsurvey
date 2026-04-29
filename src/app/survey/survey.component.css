@@ -25,13 +25,15 @@
 /* ── Page ─────────────────────────────────────────────── */
 .page {
   min-height: 100vh;
-  height: 100vh;
+  /* height: 100vh; */
+   height: auto;
   background: var(--bg);
   display: flex;
   flex-direction: column;
   font-family: var(--font);
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
+  overflow: visible;
   transition: background 0.6s ease;
 }
 
@@ -153,9 +155,11 @@
 .main-content {
   flex: 1;
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  align-items: flex-start;
   justify-content: center;
-  padding: 0.75rem 1.5rem;
+  /* padding: 0.75rem 1.5rem; */
+  padding: 0.75rem 1.5rem 2rem;
   position: relative;
   z-index: 1;
 }
@@ -172,8 +176,8 @@
   max-width: 560px;
   transition: max-width 0.4s ease;
   animation: card-in 0.45s cubic-bezier(0.22,1,0.36,1) both;
-  max-height: calc(100vh - 120px); /* ← limit height */
-  overflow-y: auto;                /* ← scroll if needed */
+  /* max-height: calc(100vh - 120px); 
+  overflow-y: auto;                */
 }
 
 .card.card--wide { max-width: 580px; }
@@ -595,6 +599,13 @@ textarea:focus {
   .big-emoji      { font-size: 3rem; }
   .response-title { font-size: 1.5rem; }
   .site-header    { padding: 0 1rem; }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    align-items: flex-start;
+    padding: 0.75rem 1rem 2rem;
+  }
 }
 
 

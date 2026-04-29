@@ -272,7 +272,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
         label:   this.selectedRating.label,
         comment: this.form.get('comment')?.value?.trim() || '',
         ticketNum: this.form.get('ticketNum')?.value?.trim() || '',
-        phoneNum:  this.form.get('phoneNum')?.value?.trim() || '',
+        phoneNum:  this.form.get('phoneNum')?.value?.trim()
+             ? '0' + this.form.get('phoneNum')?.value?.trim()   // ← prepends 0
+             : '',
       }),
     })
     .then(res => res.json())
@@ -290,5 +292,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
     this.particles = [];
     this.teardrops = [];
     this.form.reset();
+  }
+
+  get surveyUrl(): string {
+    return this.branchKey ? `?branch=${this.branchKey}` : '?branch=banilad';
   }
 }

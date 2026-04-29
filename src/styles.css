@@ -8,14 +8,17 @@
   padding: 0;
 }
 
-html,
-body {
+html {
   height: 100%;
   width: 100%;
-  overflow: hidden;   /* removes the scrollbar */
+  overflow-y: auto;    /* ← changed: allows scroll on mobile */
+  overflow-x: hidden;  /* ← still blocks horizontal scroll */
+  -webkit-text-size-adjust: 100%; /* ← prevents iOS font zoom */
 }
 
 body {
+  height: 100%;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }

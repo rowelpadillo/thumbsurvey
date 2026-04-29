@@ -67,7 +67,7 @@ serve(async (req: Request) => {
               is_satisfied: isSatisfied,
               feedback:     comment?.trim() ?? "",
               ticket_num:   ticketNum?.trim() ?? "",
-              phonenum:     phoneNum?.trim() ?? "",
+              phonenum: String(phoneNum?.trim() ?? ""),
               survey_at: new Date().toLocaleString('en-US', { timeZone: 'Asia/Manila' }),
             },
           ],
