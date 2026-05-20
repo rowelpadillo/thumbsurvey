@@ -1,12 +1,7 @@
-<!-- src/app/survey/survey.component.html -->
- <!-- mobile view fix landscape and portrait, qrcode need to fix -->
-  <!-- dashboard in appsheet for reporting -->
-   <!-- user to access the survey report  -->
-<div class="page"
+<!-- <div class="page"
   [class.page--celebrate]="state === 'celebrate' || state === 'success' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)"
   [class.page--sorry]="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
 
-  <!-- Particles -->
   <div class="particle-layer" aria-hidden="true">
     <ng-container *ngIf="state === 'celebrate' || state === 'success' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)">
       <div *ngFor="let p of particles" class="confetti-piece"
@@ -29,46 +24,20 @@
     </ng-container>
   </div>
 
-  <!-- Navy top accent bar -->
   <div class="top-bar"></div>
-
-  <!-- Header with logo placeholder -->
-  <!-- <header class="site-header">
-    <a class="logo-slot" href="#" aria-label="VECO Home"> -->
-      <!-- Replace the div below with: <img class="logo-img" src="assets/veco-logo.png" alt="Visayan Electric"> -->
-      <!-- <img class="logo-img" src="assets/visayan-electric-1.png" alt="Visayan Electric">
-    </a>
-  </header> -->
 
   <header class="site-header">
     <a class="logo-slot" [href]="surveyUrl" aria-label="VECO Home">
       <img class="logo-img" src="assets/visayan-electric-1.png" alt="Visayan Electric">
     </a>
-
-    <!-- <div class="branch-selector">
-      <select (change)="changeBranch($event)">
-        <option 
-          *ngFor="let branch of availableBranches" 
-          [value]="branch.key" 
-          [selected]="branch.key === branchKey">
-          {{ branch.name }}
-        </option>
-      </select>
-    </div> -->
   </header>
 
-  <!-- Main survey content -->
   <div class="main-content">
     <div class="card"
       [class.card--wide]="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
 
-      <!-- ══ IDLE ══════════════════════════════════════════ -->
       <ng-container *ngIf="state === 'idle'">
         <div class="survey-title-block">
-          <!-- <div class="survey-brand">
-            <span class="survey-brand-dot"></span>
-            VECO Customer Service
-          </div> -->
           <div class="survey-brand">
             <span class="survey-brand-dot"></span>
             {{ branchName }}
@@ -78,43 +47,8 @@
             <span class="survey-highlight">our service today?</span>
           </h1>
           <div class="survey-divider"></div>
-
-          <!-- ── Phone Number (optional) ── -->
-          <div class="ticket-input-block">
-            <label for="ticketNum" class="ticket-label">
-              Ticket Number <span class="optional-tag">optional</span>
-            </label>
-            <input
-              id="ticketNum"
-              type="text"
-              class="ticket-input"
-              [formControl]="$any(form.get('ticketNum'))"
-              placeholder="e.g. Ticket-123199"
-              autocomplete="off"
-              maxlength="50"
-            />
-          </div>
-
-          <!-- ── Phone Number (optional) ── ADD THIS BELOW -->
-          <div class="ticket-input-block">
-            <label for="phoneNum" class="ticket-label">
-              Phone Number <span class="optional-tag">optional</span>
-            </label>
-            <div class="phone-input-wrapper">
-              <span class="phone-prefix">🇵🇭 +63</span>
-              <input
-                id="phoneNum"
-                type="tel"
-                class="ticket-input phone-input"
-                [formControl]="$any(form.get('phoneNum'))"
-                placeholder="9XX XXX XXXX"
-                autocomplete="tel"
-                maxlength="10"
-              />
-            </div>
-          </div>
-
         </div>
+        
         <p class="prompt">Tap to rate your experience</p>
         <div class="thumbs-row">
           <button
@@ -126,7 +60,6 @@
             (click)="selectRating(r)"
             [attr.aria-label]="r.label">
 
-            <!-- SVG thumb icons — colored via iconColor -->
             <span class="thumb-icon-row">
               <svg *ngFor="let i of (r.count === 2 ? [1,2] : [1])"
                 class="thumb-svg"
@@ -145,31 +78,13 @@
         </div>
       </ng-container>
 
-      <!-- ══ CELEBRATE ══════════════════════════════════════ -->
-      <!-- <ng-container *ngIf="state === 'celebrate' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)">
-        <div class="response-screen response-screen--celebrate">
-          <div class="big-emoji pop-in">{{ selectedRating?.emoji }}</div>
-          <ng-container *ngIf="state === 'celebrate'">
-            <h2 class="response-title slide-up">Thank You!</h2>
-            <p class="response-sub slide-up delay-1">We're glad you had a great experience.</p>
-            <button class="submit-btn submit-btn--celebrate slide-up delay-2" (click)="submit()">
-              Send Feedback ✓
-            </button>
-          </ng-container>
-          <ng-container *ngIf="state === 'submitting'">
-            <h2 class="response-title">Thank you so much!</h2>
-            <div class="spinner-row"><span class="spinner spinner--dark"></span></div>
-          </ng-container>
-        </div>
-      </ng-container> -->
-
       <ng-container *ngIf="state === 'celebrate' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)">
         <div class="response-screen response-screen--celebrate">
           <div class="big-emoji pop-in">{{ selectedRating?.emoji }}</div>
           
           <ng-container *ngIf="state === 'celebrate'">
             <h2 class="response-title slide-up">Thank You!</h2>
-            <p class="response-sub slide-up delay-1">We're glad you had a great experience.<br>What service were you satisfied with?</p>
+            <p class="response-sub slide-up delay-1">What contributed most to your satisfaction during your visit?</p>
             
             <div class="feedback-pills slide-up delay-1">
               <button 
@@ -182,8 +97,7 @@
               </button>
             </div>
 
-            <!-- <div class="comment-block slide-up delay-2" style="text-align: left; margin-top: 15px;"> -->
-              <div class="comment-block slide-up delay-2" style="text-align: left; margin-top: 5px;">
+            <div class="comment-block slide-up delay-2" style="text-align: left; margin-top: 5px;">
               <textarea id="comment-positive"
                 [formControl]="$any(form.get('comment'))"
                 rows="2"
@@ -192,7 +106,33 @@
               </textarea>
             </div>
 
-            <button class="submit-btn submit-btn--celebrate slide-up delay-2" (click)="submit()">
+            <div class="user-details-group slide-up delay-2" style="text-align: left; width: 100%; margin-top: 10px;">
+              <div class="ticket-input-block">
+                <label for="ticketNumPos" class="ticket-label">
+                  Ticket Number <span class="optional-tag">optional</span>
+                </label>
+                <input id="ticketNumPos" type="text" class="ticket-input" [formControl]="$any(form.get('ticketNum'))" placeholder="e.g. Ticket-123199" autocomplete="off" maxlength="50" />
+              </div>
+
+              <div class="ticket-input-block">
+                <label for="accountNumPos" class="ticket-label">
+                  Account Number <span class="optional-tag">optional</span>
+                </label>
+                <input id="accountNumPos" type="text" class="ticket-input" [formControl]="$any(form.get('accountNum'))" placeholder="e.g. 123199" autocomplete="off" maxlength="50" />
+              </div>
+
+              <div class="ticket-input-block">
+                <label for="phoneNumPos" class="ticket-label">
+                  Phone Number <span class="optional-tag">optional</span>
+                </label>
+                <div class="phone-input-wrapper">
+                  <span class="phone-prefix">🇵🇭 +63</span>
+                  <input id="phoneNumPos" type="tel" class="ticket-input phone-input" [formControl]="$any(form.get('phoneNum'))" placeholder="9XX XXX XXXX" autocomplete="tel" maxlength="10" />
+                </div>
+              </div>
+            </div>
+
+            <button class="submit-btn submit-btn--celebrate slide-up delay-2" (click)="submit()" style="margin-top: 1.5rem;">
               Send Feedback ✓
             </button>
           </ng-container>
@@ -204,26 +144,65 @@
         </div>
       </ng-container>
 
-      <!-- ══ SORRY ══════════════════════════════════════════ -->
       <ng-container *ngIf="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
         <div class="response-screen response-screen--sorry">
           <div class="big-emoji shake">{{ selectedRating?.emoji }}</div>
           <h2 class="response-title slide-up">We're Sorry</h2>
           <p class="response-sub slide-up delay-1">Your feedback helps us do better.</p>
+
+          <div class="feedback-pills slide-up delay-1">
+            <button
+              type="button"
+              *ngFor="let option of negativeFeedbackOptions"
+              (click)="selectNegativeFeedback(option)"
+              [class.selected]="form.get('comment')?.value === option"
+              class="pill-btn pill-btn--sorry">
+              {{ option }}
+            </button>
+          </div>
+
           <div class="comment-block slide-up delay-2">
             <label for="comment" class="comment-label">What can we do to improve?</label>
             <textarea id="comment"
               [formControl]="$any(form.get('comment'))"
-              rows="4"
+              rows="3"
               placeholder="Tell us what went wrong or what you'd like to see improved…"
               maxlength="500"
               [readonly]="state === 'submitting'">
             </textarea>
             <span class="char-count">{{ commentLength }}/500</span>
           </div>
+
+          <div class="user-details-group slide-up delay-2" style="text-align: left; width: 100%; margin-top: 5px;">
+            <div class="ticket-input-block">
+              <label for="ticketNumNeg" class="ticket-label">
+                Ticket Number <span class="optional-tag">optional</span>
+              </label>
+              <input id="ticketNumNeg" type="text" class="ticket-input" [formControl]="$any(form.get('ticketNum'))" placeholder="e.g. Ticket-123199" autocomplete="off" maxlength="50" />
+            </div>
+
+            <div class="ticket-input-block">
+              <label for="accountNumNeg" class="ticket-label">
+                Account Number <span class="optional-tag">optional</span>
+              </label>
+              <input id="accountNumNeg" type="text" class="ticket-input" [formControl]="$any(form.get('accountNum'))" placeholder="e.g. 123199" autocomplete="off" maxlength="50" />
+            </div>
+
+            <div class="ticket-input-block">
+              <label for="phoneNumNeg" class="ticket-label">
+                Phone Number <span class="optional-tag">optional</span>
+              </label>
+              <div class="phone-input-wrapper">
+                <span class="phone-prefix">🇵🇭 +63</span>
+                <input id="phoneNumNeg" type="tel" class="ticket-input phone-input" [formControl]="$any(form.get('phoneNum'))" placeholder="9XX XXX XXXX" autocomplete="tel" maxlength="10" />
+              </div>
+            </div>
+          </div>
+
           <button class="submit-btn submit-btn--sorry slide-up delay-3"
             (click)="submit()"
-            [disabled]="state === 'submitting'">
+            [disabled]="state === 'submitting'"
+            style="margin-top: 1.5rem;">
             <span *ngIf="state !== 'submitting'">Submit Feedback</span>
             <span *ngIf="state === 'submitting'" class="spinner-row">
               <span class="spinner"></span> Sending…
@@ -232,7 +211,6 @@
         </div>
       </ng-container>
 
-      <!-- ══ SUCCESS ════════════════════════════════════════ -->
       <ng-container *ngIf="state === 'success'">
         <div class="response-screen response-screen--celebrate">
           <div class="big-emoji pop-in">🎉</div>
@@ -244,7 +222,6 @@
         </div>
       </ng-container>
 
-      <!-- ══ ERROR ══════════════════════════════════════════ -->
       <ng-container *ngIf="state === 'error'">
         <div class="response-screen response-screen--error">
           <div class="big-emoji">⚠️</div>
@@ -254,7 +231,6 @@
         </div>
       </ng-container>
 
-      <!-- ══ INVALID BRANCH ════════════════════════════════ -->
       <ng-container *ngIf="state === 'invalid-branch'">
         <div class="response-screen response-screen--error">
           <div class="big-emoji">🔗</div>
@@ -266,4 +242,384 @@
     </div>
   </div>
 
+</div> -->
+
+
+
+<div class="page"
+  [class.page--celebrate]="state === 'celebrate' || state === 'success' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)"
+  [class.page--sorry]="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
+
+  <div class="particle-layer" aria-hidden="true">
+    <ng-container *ngIf="state === 'celebrate' || state === 'success' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)">
+      <div *ngFor="let p of particles" class="confetti-piece"
+        [ngClass]="'shape-' + p.shape"
+        [style.left.%]="p.x"
+        [style.background]="p.shape !== 'triangle' ? p.color : 'transparent'"
+        [style.border-bottom-color]="p.shape === 'triangle' ? p.color : null"
+        [style.width.px]="p.size" [style.height.px]="p.size"
+        [style.animation-delay.ms]="p.delay"
+        [style.animation-duration.ms]="p.duration"
+        [style.--rot]="p.angle + 'deg'">
+      </div>
+    </ng-container>
+    <ng-container *ngIf="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
+      <div *ngFor="let t of teardrops" class="teardrop"
+        [style.left.%]="t.x"
+        [style.animation-delay.ms]="t.delay"
+        [style.animation-duration.ms]="t.duration">
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="top-bar"></div>
+
+  <header class="site-header">
+    <a class="logo-slot" [href]="surveyUrl" aria-label="VECO Home">
+      <img class="logo-img" src="assets/visayan-electric-1.png" alt="Visayan Electric">
+    </a>
+  </header>
+
+  <div class="main-content">
+    <div class="card"
+      [class.card--wide]="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
+
+      <ng-container *ngIf="state === 'idle'">
+        <div class="survey-title-block">
+          <div class="survey-brand">
+            <span class="survey-brand-dot"></span>
+            {{ branchName }}
+          </div>
+          <h1 class="survey-main-title">
+            How satisfied are you with<br>
+            <span class="survey-highlight">our service today?</span>
+          </h1>
+          <div class="survey-divider"></div>
+        </div>
+        
+        <p class="prompt">Tap to rate your experience</p>
+        <div class="thumbs-row">
+          <button
+            *ngFor="let r of ratings"
+            class="thumb-btn"
+            [class.thumb-btn--double]="r.count === 2"
+            [style.--btn-color]="r.color"
+            [style.--btn-bg]="r.colorBg"
+            (click)="selectRating(r)"
+            [attr.aria-label]="r.label">
+
+            <!-- <span class="thumb-icon-row">
+              <svg *ngFor="let i of (r.count === 2 ? [1,2] : [1])"
+                class="thumb-svg"
+                [class.thumb-svg--down]="r.direction === 'down'"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"
+                  [attr.fill]="r.iconColor"
+                />
+              </svg>
+            </span> -->
+
+            <span class="thumb-icon-row">
+              <svg *ngFor="let i of (r.count === 2 ? [1,2] : [1]); let idx = index"
+                class="thumb-svg"
+                [class.thumb-svg--down]="r.direction === 'down'"
+                [class.thumb-svg--mirrored]="r.count === 2 && idx === 1"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"
+                  [attr.fill]="r.iconColor"
+                />
+              </svg>
+            </span>
+
+            <span class="thumb-label">{{ r.label }}</span>
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="state === 'celebrate' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)">
+        <div class="response-screen response-screen--celebrate">
+          <!-- <div class="big-emoji pop-in">{{ selectedRating?.emoji }}</div> -->
+
+          <div class="big-emoji pop-in">
+            <span *ngFor="let i of (selectedRating?.count === 2 ? [1,2] : [1]); let idx = index"
+                  class="emoji-span"
+                  [class.emoji-mirrored]="selectedRating?.count === 2 && idx === 1">
+              {{ selectedRating?.direction === 'up' ? '👍' : '👎' }}
+            </span>
+          </div>
+          
+          <ng-container *ngIf="state === 'celebrate'">
+            <h2 class="response-title slide-up">Thank You!</h2>
+            <p class="response-sub slide-up delay-1">What contributed most to your satisfaction during your visit?</p>
+            
+            <div class="feedback-pills slide-up delay-1">
+              <button 
+                type="button" 
+                *ngFor="let option of positiveFeedbackOptions"
+                (click)="selectPositiveFeedback(option)"
+                [class.selected]="form.get('comment')?.value === option"
+                class="pill-btn">
+                {{ option }}
+              </button>
+            </div>
+
+            <div class="comment-block slide-up delay-2" style="text-align: left; margin-top: 5px;">
+              <textarea id="comment-positive"
+                [formControl]="$any(form.get('comment'))"
+                rows="2"
+                placeholder="Any other comments? (Optional)"
+                maxlength="500">
+              </textarea>
+            </div>
+
+            <!-- <button type="button" class="toggle-details-btn slide-up delay-2" (click)="showDetails = !showDetails">
+              <span *ngIf="!showDetails">+ Add my account details (Optional)</span>
+              <span *ngIf="showDetails">- Hide account details</span>
+            </button>
+
+            <div class="user-details-group slide-up" *ngIf="showDetails" style="text-align: left; width: 100%;">
+              <div class="details-row">
+                <div class="ticket-input-block">
+                  <label for="ticketNumPos" class="ticket-label">
+                    Ticket Number <span class="optional-tag">helps track case</span>
+                  </label>
+                  <input id="ticketNumPos" type="text" class="ticket-input" [formControl]="$any(form.get('ticketNum'))" placeholder="e.g. Ticket-123" autocomplete="off" maxlength="50" />
+                </div>
+
+                <div class="ticket-input-block">
+                  <label for="accountNumPos" class="ticket-label">
+                    Account Number <span class="optional-tag">optional</span>
+                  </label>
+                  <input id="accountNumPos" type="text" class="ticket-input" [formControl]="$any(form.get('accountNum'))" placeholder="e.g. 123199" autocomplete="off" maxlength="50" />
+                </div>
+              </div>
+
+              <div class="ticket-input-block">
+                <label for="phoneNumPos" class="ticket-label">
+                  Phone Number <span class="optional-tag">if you'd like a call back</span>
+                </label>
+                <div class="phone-input-wrapper">
+                  <span class="phone-prefix">🇵🇭 +63</span>
+                  <input id="phoneNumPos" type="tel" class="ticket-input phone-input" [formControl]="$any(form.get('phoneNum'))" placeholder="9XX XXX XXXX" autocomplete="tel" maxlength="10" />
+                </div>
+              </div>
+            </div> -->
+
+            <button type="button" class="toggle-details-btn slide-up delay-2" (click)="showDetails = !showDetails">
+              <span *ngIf="!showDetails">+ Add my account details (Optional)</span>
+              <span *ngIf="showDetails">- Hide account details</span>
+            </button>
+
+            <div class="user-details-group priority-box slide-up" *ngIf="showDetails">
+              
+              <div class="priority-header">
+                <svg class="priority-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <div class="priority-text">
+                  <h4>Help us recognize our team!</h4>
+                  <p>Leave your details so we can match your feedback to the specific branch and staff who helped you.</p>
+                </div>
+              </div>
+
+              <div class="details-row">
+                <div class="ticket-input-block">
+                  <label for="ticketNumPos" class="ticket-label">
+                    Ticket Number <span class="optional-tag">helps track case</span>
+                  </label>
+                  <input id="ticketNumPos" type="text" class="ticket-input" [formControl]="$any(form.get('ticketNum'))" placeholder="e.g. Ticket-123" autocomplete="off" maxlength="50" />
+                </div>
+
+                <div class="ticket-input-block">
+                  <label for="accountNumPos" class="ticket-label">
+                    Account Number <span class="optional-tag">optional</span>
+                  </label>
+                  <input id="accountNumPos" type="text" class="ticket-input" [formControl]="$any(form.get('accountNum'))" placeholder="e.g. 123199" autocomplete="off" maxlength="50" />
+                </div>
+              </div>
+
+              <div class="ticket-input-block">
+                <label for="phoneNumPos" class="ticket-label">
+                  Phone Number <span class="optional-tag">optional</span>
+                </label>
+                <div class="phone-input-wrapper">
+                  <span class="phone-prefix">🇵🇭 +63</span>
+                  <input id="phoneNumPos" type="tel" class="ticket-input phone-input" [formControl]="$any(form.get('phoneNum'))" placeholder="9XX XXX XXXX" autocomplete="tel" maxlength="10" />
+                </div>
+              </div>
+            </div>
+
+            <button class="submit-btn submit-btn--celebrate slide-up delay-2" (click)="submit()" style="margin-top: 1.5rem;">
+              Send Feedback ✓
+            </button>
+          </ng-container>
+
+          <ng-container *ngIf="state === 'submitting'">
+            <h2 class="response-title">Thank you so much!</h2>
+            <div class="spinner-row"><span class="spinner spinner--dark"></span></div>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
+        <div class="response-screen response-screen--sorry">
+          <!-- <div class="big-emoji shake">{{ selectedRating?.emoji }}</div> -->
+
+          <div class="big-emoji shake">
+            <span *ngFor="let i of (selectedRating?.count === 2 ? [1,2] : [1]); let idx = index"
+                  class="emoji-span"
+                  [class.emoji-mirrored]="selectedRating?.count === 2 && idx === 0">
+              {{ selectedRating?.direction === 'up' ? '👍' : '👎' }}
+            </span>
+          </div>
+
+          <h2 class="response-title slide-up">We're Sorry</h2>
+          <p class="response-sub slide-up delay-1">Your feedback helps us do better.</p>
+
+          <div class="feedback-pills slide-up delay-1">
+            <button
+              type="button"
+              *ngFor="let option of negativeFeedbackOptions"
+              (click)="selectNegativeFeedback(option)"
+              [class.selected]="form.get('comment')?.value === option"
+              class="pill-btn pill-btn--sorry">
+              {{ option }}
+            </button>
+          </div>
+
+          <div class="comment-block slide-up delay-2">
+            <label for="comment" class="comment-label">What can we do to improve?</label>
+            <textarea id="comment"
+              [formControl]="$any(form.get('comment'))"
+              rows="3"
+              placeholder="Tell us what went wrong or what you'd like to see improved…"
+              maxlength="500"
+              [readonly]="state === 'submitting'">
+            </textarea>
+            <span class="char-count">{{ commentLength }}/500</span>
+          </div>
+
+          <!-- <button type="button" class="toggle-details-btn slide-up delay-2" (click)="showDetails = !showDetails">
+            <span *ngIf="!showDetails">+ Add my account details so you can look into my issue (Optional)</span>
+            <span *ngIf="showDetails">- Hide account details</span>
+          </button>
+
+          <div class="user-details-group slide-up" *ngIf="showDetails" style="text-align: left; width: 100%;">
+            <div class="details-row">
+              <div class="ticket-input-block">
+                <label for="ticketNumNeg" class="ticket-label">
+                  Ticket Number <span class="optional-tag">helps track case</span>
+                </label>
+                <input id="ticketNumNeg" type="text" class="ticket-input" [formControl]="$any(form.get('ticketNum'))" placeholder="e.g. Ticket-123" autocomplete="off" maxlength="50" />
+              </div>
+
+              <div class="ticket-input-block">
+                <label for="accountNumNeg" class="ticket-label">
+                  Account Number <span class="optional-tag">optional</span>
+                </label>
+                <input id="accountNumNeg" type="text" class="ticket-input" [formControl]="$any(form.get('accountNum'))" placeholder="e.g. 123199" autocomplete="off" maxlength="50" />
+              </div>
+            </div>
+
+            <div class="ticket-input-block">
+              <label for="phoneNumNeg" class="ticket-label">
+                Phone Number <span class="optional-tag">if you'd like us to call you</span>
+              </label>
+              <div class="phone-input-wrapper">
+                <span class="phone-prefix">🇵🇭 +63</span>
+                <input id="phoneNumNeg" type="tel" class="ticket-input phone-input" [formControl]="$any(form.get('phoneNum'))" placeholder="9XX XXX XXXX" autocomplete="tel" maxlength="10" />
+              </div>
+            </div>
+          </div> -->
+
+        <button type="button" class="toggle-details-btn slide-up delay-2" (click)="showDetails = !showDetails">
+            <span *ngIf="!showDetails">+ Add my account details so you can look into my issue (Optional)</span>
+            <span *ngIf="showDetails">- Hide account details</span>
+          </button>
+
+          <div class="user-details-group priority-box slide-up" *ngIf="showDetails">
+            
+            <div class="priority-header">
+              <svg class="priority-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+              </svg>
+              <div class="priority-text">
+                <h4>Let us make it right.</h4>
+                <p>Provide your details so our support team can investigate and follow up with you directly.</p>
+              </div>
+            </div>
+
+            <div class="details-row">
+              <div class="ticket-input-block">
+                <label for="ticketNumNeg" class="ticket-label">
+                  Ticket Number <span class="optional-tag">helps track case</span>
+                </label>
+                <input id="ticketNumNeg" type="text" class="ticket-input" [formControl]="$any(form.get('ticketNum'))" placeholder="e.g. Ticket-123" autocomplete="off" maxlength="50" />
+              </div>
+
+              <div class="ticket-input-block">
+                <label for="accountNumNeg" class="ticket-label">
+                  Account Number <span class="optional-tag">optional</span>
+                </label>
+                <input id="accountNumNeg" type="text" class="ticket-input" [formControl]="$any(form.get('accountNum'))" placeholder="e.g. 123199" autocomplete="off" maxlength="50" />
+              </div>
+            </div>
+
+            <div class="ticket-input-block">
+              <label for="phoneNumNeg" class="ticket-label">
+                Phone Number <span class="optional-tag">if you'd like us to call you</span>
+              </label>
+              <div class="phone-input-wrapper">
+                <span class="phone-prefix">🇵🇭 +63</span>
+                <input id="phoneNumNeg" type="tel" class="ticket-input phone-input" [formControl]="$any(form.get('phoneNum'))" placeholder="9XX XXX XXXX" autocomplete="tel" maxlength="10" />
+              </div>
+            </div>
+          </div>
+
+          <button class="submit-btn submit-btn--sorry slide-up delay-3"
+            (click)="submit()"
+            [disabled]="state === 'submitting'"
+            style="margin-top: 1.5rem;">
+            <span *ngIf="state !== 'submitting'">Submit Feedback</span>
+            <span *ngIf="state === 'submitting'" class="spinner-row">
+              <span class="spinner"></span> Sending…
+            </span>
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="state === 'success'">
+        <div class="response-screen response-screen--celebrate">
+          <div class="big-emoji pop-in">🎉</div>
+          <h2 class="response-title slide-up">All Done!</h2>
+          <p class="response-sub slide-up delay-1">Your response has been recorded. Thank you!</p>
+          <button class="submit-btn submit-btn--celebrate slide-up delay-2" (click)="reset()">
+            Submit Another Response
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="state === 'error'">
+        <div class="response-screen response-screen--error">
+          <div class="big-emoji">⚠️</div>
+          <h2 class="response-title">Oops!</h2>
+          <p class="response-sub">{{ errorMsg }}</p>
+          <button class="submit-btn submit-btn--sorry" (click)="reset()">Try Again</button>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="state === 'invalid-branch'">
+        <div class="response-screen response-screen--error">
+          <div class="big-emoji">🔗</div>
+          <h2 class="response-title">Invalid Link</h2>
+          <p class="response-sub">Please use the QR code provided at your branch.</p>
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
 </div>

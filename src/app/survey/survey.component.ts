@@ -62,6 +62,8 @@ export class SurveyComponent implements OnInit, OnDestroy {
   branchName = '';
   branchKey = '';
 
+  showDetails: boolean = false;
+
   // Expose the branches to the HTML template
   availableBranches = Object.entries(BRANCHES).map(([key, name]) => ({ key, name }));
 
@@ -97,16 +99,29 @@ export class SurveyComponent implements OnInit, OnDestroy {
     // // ORANGE (Thumbs Down)
     // { value: 2, emoji: '👎',   label: 'Unsatisfied',     color: '#f97316', colorBg: '#fff7ed', iconColor: '#f97316', count: 1, direction: 'down' },
     // DARK RED (Two Thumbs Down)
-    { value: 1, emoji: '👎👎', label: 'Two Thumbs Down', color: '#dc2626', colorBg: '#fef2f2', iconColor: '#dc2626', count: 2, direction: 'down' },
+    //{ value: 1, emoji: '👎👎', label: 'Very Unsatisfied', color: '#dc2626', colorBg: '#fef2f2', iconColor: '#dc2626', count: 2, direction: 'down' },
     
     // RED (Unsatisfied)
-    { value: 2, emoji: '👎',   label: 'Unsatisfied',     color: '#ef4444', colorBg: '#fef2f2', iconColor: '#ef4444', count: 1, direction: 'down' },
+    //{ value: 2, emoji: '👎',   label: 'Unsatisfied',     color: '#ef4444', colorBg: '#fef2f2', iconColor: '#ef4444', count: 1, direction: 'down' },
     
+    // LIGHT GREEN (Thumbs Up)
+    //{ value: 3, emoji: '👍',   label: 'Satisfied',       color: '#4ade80', colorBg: '#f0fdf4', iconColor: '#4ade80', count: 1, direction: 'up'   },
+
+    // GREEN (Two Thumbs Up)
+     //{ value: 4, emoji: '👍👍', label: 'Very Satisfied',   color: '#16a34a', colorBg: '#f0fdf4', iconColor: '#16a34a', count: 2, direction: 'up'   },
+
+    // GREEN (Two Thumbs Up)
+    { value: 4, emoji: '👍👍', label: 'Very Satisfied',   color: '#16a34a', colorBg: '#f0fdf4', iconColor: '#16a34a', count: 2, direction: 'up'   },
+
     // LIGHT GREEN (Thumbs Up)
     { value: 3, emoji: '👍',   label: 'Satisfied',       color: '#4ade80', colorBg: '#f0fdf4', iconColor: '#4ade80', count: 1, direction: 'up'   },
 
-    // GREEN (Two Thumbs Up)
-     { value: 4, emoji: '👍👍', label: 'Two Thumbs Up',   color: '#16a34a', colorBg: '#f0fdf4', iconColor: '#16a34a', count: 2, direction: 'up'   },
+    // RED (Unsatisfied)
+    { value: 2, emoji: '👎',   label: 'Unsatisfied',     color: '#ef4444', colorBg: '#fef2f2', iconColor: '#ef4444', count: 1, direction: 'down' },
+    
+    // DARK RED (Two Thumbs Down)
+    { value: 1, emoji: '👎👎', label: 'Very Unsatisfied', color: '#dc2626', colorBg: '#fef2f2', iconColor: '#dc2626', count: 2, direction: 'down' },
+
   ];
 
   constructor(private fb: FormBuilder) {}
@@ -138,6 +153,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
     comment: ['', Validators.maxLength(500)],
     ticketNum: ['', Validators.maxLength(50)],
     phoneNum:  ['', Validators.maxLength(12)],
+    accountNum: ['', Validators.maxLength(50)],
   });
 }
 
@@ -239,8 +255,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
   // for positive feedback
   // Add this array of options (you can customize these electric services!)
   positiveFeedbackOptions: string[] = [
-    'Fast Reconnection/Connection',
+    'Fast service',
     'Friendly Staff',
+    'Clean facility',
+    'Clear Staff communication',
     'Clear Billing Explanation',
     'Quick Issue Resolution',
     'Smooth Application Process'
@@ -256,6 +274,22 @@ export class SurveyComponent implements OnInit, OnDestroy {
 
   // ==========================================
 
+
+  // for negative feedback (keep the comment box and add optional buttons for common complaints)
+  negativeFeedbackOptions: string[] = [
+    'Long Waiting Time',
+    'Unfriendly Staff',
+    'Unclear Billing',
+    'Unresolved Issue',
+    'Slow Process',
+    'Poor Communication',
+  ];
+
+  selectNegativeFeedback(option: string): void {
+    this.form.patchValue({ comment: option });
+  }
+
+// ==========================================
   submit(): void {
     if (this.state === 'submitting' || !this.selectedRating) return;
     this.state = 'submitting';
@@ -275,6 +309,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
         phoneNum:  this.form.get('phoneNum')?.value?.trim()
              ? '0' + this.form.get('phoneNum')?.value?.trim()   // ← prepends 0
              : '',
+        accountNum: this.form.get('accountNum')?.value?.trim() || '',
       }),
     })
     .then(res => res.json())

@@ -108,6 +108,7 @@
 }
 
 /* ── Header with logo ─────────────────────────────────── */
+
 .site-header {
   position: relative;
   z-index: 2;
@@ -145,7 +146,7 @@
 }
 
 .logo-img {
-  height: 100px;
+  height: 120px;
   width: auto;
   display: block;
   object-fit: contain;
@@ -421,6 +422,41 @@
   line-height: 1.3;
 }
 
+
+/* 1. UP - Left Thumb (Points Right default) */
+.thumb-svg:not(.thumb-svg--down):not(.thumb-svg--mirrored) {
+  transform: scaleX(1);
+}
+.thumb-btn:hover .thumb-svg:not(.thumb-svg--down):not(.thumb-svg--mirrored) {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+/* 2. UP - Right Thumb (Mirrored to Point Left) */
+.thumb-svg.thumb-svg--mirrored:not(.thumb-svg--down) {
+  transform: scaleX(-1);
+}
+.thumb-btn:hover .thumb-svg.thumb-svg--mirrored:not(.thumb-svg--down) {
+  transform: scaleX(-1) scale(1.15) rotate(-5deg);
+}
+
+/* 3. DOWN - Left Thumb (Points Right) */
+.thumb-svg--down:not(.thumb-svg--mirrored) {
+  transform: rotate(180deg) scaleX(-1);
+}
+.thumb-btn:hover .thumb-svg--down:not(.thumb-svg--mirrored) {
+  transform: rotate(180deg) scaleX(-1) scale(1.15) rotate(-5deg);
+}
+
+/* 4. DOWN - Right Thumb (Mirrored to Point Left) */
+.thumb-svg--down.thumb-svg--mirrored {
+  transform: rotate(180deg);
+}
+.thumb-btn:hover .thumb-svg--down.thumb-svg--mirrored {
+  transform: rotate(180deg) scale(1.15) rotate(-5deg);
+}
+
+
+
 /* ── Response screens ─────────────────────────────────── */
 .response-screen {
   display: flex;
@@ -641,6 +677,13 @@ textarea:focus {
   box-shadow: 0 4px 6px -1px rgba(22, 163, 74, 0.2);
 }
 
+.pill-btn--sorry.selected {
+  background: #e53e3e;
+  color: white;
+  border-color: #e53e3e;
+  box-shadow: 0 2px 6px rgba(229,62,62,0.25);
+}
+
 textarea {
   width: 100%;
   margin-top: 5px;    /* Reduced from 15px */
@@ -685,4 +728,116 @@ textarea {
 .branch-selector select:focus {
   border-color: #16a34a; /* Visayan Electric green focus ring */
   box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+}
+
+
+/* ── New Toggle Button for Optional Details ──────────────── */
+.toggle-details-btn {
+  background: none;
+  border: none;
+  color: var(--cyan);
+  font-family: var(--font);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  margin-top: 0.5rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.toggle-details-btn:hover {
+  color: var(--navy);
+}
+
+.toggle-details-btn:focus {
+  outline: none;
+  opacity: 0.8;
+}
+
+/* ── Two-Column Layout for Desktop ───────────────────────── */
+.details-row {
+  display: flex;
+  gap: 1rem; /* Space between the two inputs */
+  width: 100%;
+}
+
+.details-row .ticket-input-block {
+  flex: 1; /* Makes them share the width equally */
+}
+
+/* Ensure it drops to stacked inputs on mobile */
+@media (max-width: 480px) {
+  .details-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+
+/* ── Priority Service Box (For Optional Details) ─────────── */
+.priority-box {
+  background-color: #f8fafc; /* Very soft slate blue/gray */
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-top: 1rem;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: inset 0 2px 6px rgba(30,45,107,0.02);
+}
+
+.priority-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed #cbd5e1;
+}
+
+.priority-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--cyan);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.priority-text h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.9rem;
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.priority-text p {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+/* Adjustments to make the inputs fit nicely inside the box */
+.priority-box .ticket-input-block {
+  margin-top: 0.5rem;
+}
+
+.priority-box .ticket-input,
+.priority-box .phone-input-wrapper {
+  background-color: var(--white); /* Contrast against the gray box */
+}
+
+
+
+/* thumb mirroring */
+/* ── Mirrored Big Emojis ─────────────────────────────── */
+.emoji-span {
+  display: inline-block; 
+}
+
+.emoji-mirrored {
+  transform: scaleX(-1);
 }
