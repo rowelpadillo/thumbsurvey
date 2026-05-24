@@ -62,7 +62,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   branchName = '';
   branchKey = '';
 
-  showDetails: boolean = false;
+  showDetails: boolean = true; // control visibility of details section
 
   // Expose the branches to the HTML template
   availableBranches = Object.entries(BRANCHES).map(([key, name]) => ({ key, name }));
@@ -326,6 +326,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
     this.errorMsg = '';
     this.particles = [];
     this.teardrops = [];
+    this.showDetails = true;
     this.form.reset();
   }
 
