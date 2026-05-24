@@ -467,7 +467,6 @@
 
       <ng-container *ngIf="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
         <div class="response-screen response-screen--sorry">
-          <!-- <div class="big-emoji shake">{{ selectedRating?.emoji }}</div> -->
 
           <div class="big-emoji shake">
             <span *ngFor="let i of (selectedRating?.count === 2 ? [1,2] : [1]); let idx = index"
@@ -537,7 +536,7 @@
           </div> -->
 
         <button type="button" class="toggle-details-btn slide-up delay-2" (click)="showDetails = !showDetails">
-            <span *ngIf="!showDetails">+ Add my account details so you can look into my issue (Optional)</span>
+            <span *ngIf="!showDetails">+ Add your account details so we can look into my issue (Optional)</span>
             <span *ngIf="showDetails">- Hide account details</span>
           </button>
 

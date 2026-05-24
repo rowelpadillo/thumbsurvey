@@ -397,8 +397,8 @@
 }
 
 .thumb-svg {
-  width: 36px;
-  height: 36px;
+  width: 45px;
+  height: 45px;
   transition: transform 0.2s ease;
   flex-shrink: 0;
 }
@@ -409,8 +409,8 @@
 }
 
 .thumb-btn--double .thumb-svg {
-  width: 28px;
-  height: 28px;
+  width: 45px;
+  height: 45px;
 }
 
 .thumb-label {
@@ -420,6 +420,7 @@
   text-align: center;
   letter-spacing: 0.01em;
   line-height: 1.3;
+  margin-top: 0.5rem;
 }
 
 
