@@ -620,5 +620,49 @@
       </ng-container>
 
     </div>
+
+      <!-- ── Banner — desktop/tablet only ───────────────────── -->
+      <!-- <div class="banner-wrapper" *ngIf="bannerImageUrl && state === 'idle'">
+        <a [href]="bannerLinkUrl || '#'" target="_blank" rel="noopener" class="banner-link">
+          <img [src]="bannerImageUrl" alt="Announcement" class="banner-img"/>
+        </a>
+      </div> -->
+      <!-- <div class="banner-wrapper" *ngIf="banners.length > 0 && state === 'idle'">
+        <a [href]="banners[currentBannerIndex]?.link_url || '#'" target="_blank" rel="noopener" class="banner-link">
+          <img [src]="banners[currentBannerIndex]?.image_url" alt="Announcement" class="banner-img"/>
+        </a>
+      </div> -->
+      <!-- <div class="banner-wrapper" *ngIf="banners.length > 0 && state === 'idle'">
+        <div class="banner-link"> 
+          
+          <div class="carousel-track" [style.transform]="'translateX(-' + (currentBannerIndex * 100) + '%)'">
+            
+            <a *ngFor="let banner of banners" [href]="banner.link_url || '#'" target="_blank" rel="noopener" class="carousel-slide">
+              <img [src]="banner.image_url" alt="Announcement" class="banner-img"/>
+            </a>
+
+          </div>
+
+        </div>
+      </div> -->
+
+      <div class="banner-wrapper" *ngIf="banners.length > 0 && state === 'idle'">
+        <div class="banner-link"> 
+          
+          <div class="carousel-track" 
+               [style.transform]="'translateX(-' + (currentBannerIndex * 100) + '%)'"
+               [style.transition]="transitionStyle"> <a *ngFor="let banner of banners" [href]="banner.link_url || '#'" target="_blank" rel="noopener" class="carousel-slide">
+              <img [src]="banner.image_url" alt="Announcement" class="banner-img"/>
+            </a>
+
+            <a *ngIf="banners.length > 1" [href]="banners[0].link_url || '#'" target="_blank" rel="noopener" class="carousel-slide" aria-hidden="true">
+              <img [src]="banners[0].image_url" alt="Announcement" class="banner-img"/>
+            </a>
+
+          </div>
+
+        </div>
+      </div>
+      <!-- banner end  -->
   </div>
 </div>

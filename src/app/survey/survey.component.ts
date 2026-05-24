@@ -62,6 +62,16 @@ export class SurveyComponent implements OnInit, OnDestroy {
   branchName = '';
   branchKey = '';
 
+  // banner
+  bannerImageUrl = '';
+  bannerLinkUrl = '';
+
+  // banner carousel
+  banners: any[] = [];
+  currentBannerIndex: number = 0;
+  private carouselTimer: any;
+  transitionStyle: string = 'transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1)';
+
   showDetails: boolean = true; // control visibility of details section
 
   // Expose the branches to the HTML template
@@ -155,9 +165,91 @@ export class SurveyComponent implements OnInit, OnDestroy {
     phoneNum:  ['', Validators.maxLength(12)],
     accountNum: ['', Validators.maxLength(50)],
   });
+
+  this.loadBanner();
 }
 
-  ngOnDestroy(): void { clearTimeout(this.animTimer); }
+// banner load
+
+// loadBanner(): void {
+//   fetch('https://tinwiwrhvexmwrctihdh.supabase.co/functions/v1/getBanner', {
+//     headers: {
+//       'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpbndpd3JodmV4bXdyY3RpaGRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMzgyNDUsImV4cCI6MjA4OTkxNDI0NX0.t12NPSjXjqf4XI4b-nchpZY5ebFANS8t8fo3dbyZysY',
+//     }
+//   })
+//   .then(res => res.json())
+//   .then(data => {
+//     if (data?.banner) {
+//       this.bannerImageUrl = data.banner.image_url ?? '';
+//       this.bannerLinkUrl  = data.banner.link_url  ?? '#';
+//     }
+//   })
+//   .catch(() => {
+//     // Banner failure is silent — survey still works
+//   });
+// }
+
+loadBanner(): void {
+    fetch('https://tinwiwrhvexmwrctihdh.supabase.co/functions/v1/getBanner', {
+      headers: {
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpbndpd3JodmV4bXdyY3RpaGRoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzMzgyNDUsImV4cCI6MjA4OTkxNDI0NX0.t12NPSjXjqf4XI4b-nchpZY5ebFANS8t8fo3dbyZysY',
+      }
+    })
+    .then(res => res.json())
+    .then(data => {
+      // Check for our new array of banners
+      if (data?.banners && data.banners.length > 0) {
+        this.banners = data.banners;
+        this.startCarousel();
+      }
+    })
+    .catch(() => {
+      // Banner failure is silent — survey still works
+    });
+  }
+
+  // Add this new function to handle the rotation
+  // startCarousel(): void {
+  //   // Only start the timer if there is more than 1 banner
+  //   if (this.banners.length > 1) {
+  //     this.carouselTimer = setInterval(() => {
+  //       this.currentBannerIndex = (this.currentBannerIndex + 1) % this.banners.length;
+  //     }, 5000); // 5000 milliseconds = 5 seconds
+  //   }
+  // }
+  startCarousel(): void {
+    if (this.banners.length > 1) {
+      this.carouselTimer = setInterval(() => {
+        this.currentBannerIndex++;
+
+        // If we just slid to the "clone" (the extra slide at the end)
+        if (this.currentBannerIndex === this.banners.length) {
+          
+          // Wait 600ms for the slide animation to finish
+          setTimeout(() => {
+            // 1. Turn off the smooth animation
+            this.transitionStyle = 'none'; 
+            
+            // 2. Snap instantly back to the real first slide (index 0)
+            this.currentBannerIndex = 0;
+
+            // 3. Turn the smooth animation back on a tiny moment later
+            setTimeout(() => {
+              this.transitionStyle = 'transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1)';
+            }, 50);
+
+          }, 600); // 600ms matches our CSS animation speed
+        }
+      }, 5000);
+    }
+  }
+
+// end banner load
+
+  ngOnDestroy(): void { 
+    clearTimeout(this.animTimer); 
+    clearInterval(this.carouselTimer);
+  }
 
   selectRating(r: RatingOption): void {
     this.selectedRating = r;

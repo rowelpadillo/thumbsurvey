@@ -842,3 +842,103 @@ textarea {
 .emoji-mirrored {
   transform: scaleX(-1);
 }
+
+
+
+
+/* ── Banner — desktop/tablet only ───────────────────────── */
+/* .banner-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem 1.5rem;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+} */
+ 
+/* .banner-link {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.18s, box-shadow 0.18s;
+} */
+ 
+/* .banner-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(30,45,107,0.15);
+} */
+ 
+/* .banner-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+} */
+ 
+/* Hide banner on mobile */
+/* @media (max-width: 480px) {
+  .banner-wrapper { display: none; }
+} */
+
+/* ── Banner — desktop/tablet only ───────────────────────── */
+.banner-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+  
+  
+  position: fixed; 
+  bottom: 2rem; 
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 10;
+}
+ 
+.banner-link {
+  display: block;
+  width: 100%;
+  max-width: 768px; 
+  border-radius: var(--radius-lg, 16px);
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(30,45,107,0.15);
+  transition: transform 0.18s, box-shadow 0.18s;
+  line-height: 0;
+  background: transparent;
+}
+ 
+.banner-link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(30,45,107,0.15);
+}
+
+/* THE NEW ANIMATION: The track that pushes the images left */
+.carousel-track {
+  display: flex;
+  width: 100%;
+  /* transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);  */
+  will-change: transform; /* Optimizes performance */
+}
+
+/* Forces every image to be exactly 100% of the window width */
+.carousel-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  display: block;
+}
+ 
+.banner-img {
+  width: 100%;
+  height: auto; 
+  max-height: 25vh; 
+  object-fit: cover; 
+  display: block;
+}
+ 
+/* Hide banner on mobile */
+@media (max-width: 480px) {
+  .banner-wrapper { display: none; }
+}
