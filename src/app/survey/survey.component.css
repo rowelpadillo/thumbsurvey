@@ -164,11 +164,14 @@
 .main-content {
   flex: 1;
   display: flex;
+  flex-direction: column;
   /* align-items: center; */
-  align-items: flex-start;
-  justify-content: center;
+  align-items: center;
+  /* align-items: flex-start; */
+  justify-content: flex-start;
   /* padding: 0.75rem 1.5rem; */
-  padding: 0.75rem 1.5rem 2rem;
+  padding: 3rem 1.5rem 2rem;
+  gap: 1px;
   position: relative;
   z-index: 1;
 }
@@ -648,10 +651,16 @@ textarea:focus {
 
 @media (max-width: 480px) {
   .main-content {
-    align-items: flex-start;
-    padding: 0.75rem 1rem 2rem;
+    /* align-items: flex-start; */
+    /* padding: 0.75rem 1rem 2rem; */
+    align-items: center; 
+    /* 1. Stop forcing it into the absolute vertical middle */
+    justify-content: flex-start;
+    padding-top: 5vh;
   }
 }
+
+
 
 
 /* postiive button pills */
@@ -892,18 +901,32 @@ textarea {
 } */
 
 /* ── Banner — desktop/tablet only ───────────────────────── */
-.banner-wrapper {
+/* .banner-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem; */
+
+  .banner-wrapper {
   display: flex;
   justify-content: center;
   padding: 0 1rem;
   
   
-  position: fixed; 
+  /* position: fixed; 
   bottom: 2rem; 
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
+  z-index: 10; */
+
+  position: relative; 
+  width: 100%;
   z-index: 10;
+  
+  /* ~1 inch of space above the banner */
+  margin-top: 60px; 
+  /* Ensures it doesn't touch the very bottom of the screen */
+  margin-bottom: 2rem;
 }
  
 .banner-link {
@@ -950,4 +973,18 @@ textarea {
 /* @media (max-width: 480px) { */
 @media (max-width: 768px), (max-height: 500px) {
   .banner-wrapper { display: none; }
+}
+
+
+/* Fix Android/iOS thumbs down orientation on mobile screens */
+@media (max-width: 768px) {
+  /* Undo the mirror on the left thumb */
+  .response-screen--sorry .emoji-mirrored {
+    transform: scaleX(1); 
+  }
+  
+  /* Mirror the right thumb instead */
+  .response-screen--sorry .emoji-span:not(.emoji-mirrored) {
+    transform: scaleX(-1);
+  }
 }
