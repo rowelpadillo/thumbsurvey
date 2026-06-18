@@ -247,6 +247,7 @@
 
 
 <div class="page"
+  [class.page--idle]="state === 'idle'"
   [class.page--celebrate]="state === 'celebrate' || state === 'success' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)"
   [class.page--sorry]="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
 
