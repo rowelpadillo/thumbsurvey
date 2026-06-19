@@ -244,9 +244,12 @@
 
 </div> -->
 
-
+<div class="loading-overlay" *ngIf="isLoading">
+  <div class="loading-spinner"></div>
+</div>
 
 <div class="page"
+  [class.page--hidden]="isLoading"
   [class.page--idle]="state === 'idle'"
   [class.page--celebrate]="state === 'celebrate' || state === 'success' || (state === 'submitting' && selectedRating && selectedRating.value >= 3)"
   [class.page--sorry]="state === 'sorry' || (state === 'submitting' && selectedRating && selectedRating.value < 3)">
@@ -276,7 +279,8 @@
   <div class="top-bar"></div>
 
   <header class="site-header">
-    <a class="logo-slot" [href]="surveyUrl" aria-label="VECO Home">
+    <!-- <a class="logo-slot" [href]="surveyUrl" aria-label="VECO Home"> -->
+    <a class="logo-slot" href="javascript:void(0)" (click)="reloadPage()" aria-label="VECO Home">
       <img class="logo-img" src="assets/visayan-electric-1.png" alt="Visayan Electric">
     </a>
   </header>
@@ -659,9 +663,7 @@
             <a *ngIf="banners.length > 1" [href]="banners[0].link_url || '#'" target="_blank" rel="noopener" class="carousel-slide" aria-hidden="true">
               <img [src]="banners[0].image_url" alt="Announcement" class="banner-img"/>
             </a>
-
           </div>
-
         </div>
       </div>
       <!-- banner end  -->

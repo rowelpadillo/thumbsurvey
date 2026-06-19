@@ -924,9 +924,9 @@ textarea {
   z-index: 10;
   
   /* ~1 inch of space above the banner */
-  margin-top: 60px; 
+  margin-top: 1.5rem !important; 
   /* Ensures it doesn't touch the very bottom of the screen */
-  margin-bottom: 2rem;
+  margin-bottom: 0 !important;
 }
  
 .banner-link {
@@ -987,4 +987,36 @@ textarea {
   .response-screen--sorry .emoji-span:not(.emoji-mirrored) {
     transform: scaleX(-1);
   }
+}
+
+
+
+/* ── Loading overlay ──────────────────────────────────── */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid #dde3f0;
+  border-top-color: #1e2d6b;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Hide and fade in the page once loading resolves */
+.page--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page {
+  transition: opacity 0.4s ease;
 }

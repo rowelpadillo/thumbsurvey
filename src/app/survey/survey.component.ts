@@ -189,6 +189,8 @@ export class SurveyComponent implements OnInit, OnDestroy {
 //   });
 // }
 
+isLoading = true;
+
 loadBanner(): void {
     fetch('https://tinwiwrhvexmwrctihdh.supabase.co/functions/v1/getBanner', {
       headers: {
@@ -202,9 +204,11 @@ loadBanner(): void {
         this.banners = data.banners;
         this.startCarousel();
       }
+      this.isLoading  = false;
     })
     .catch(() => {
       // Banner failure is silent — survey still works
+      this.isLoading  = false;
     });
   }
 
@@ -263,6 +267,29 @@ loadBanner(): void {
       this.spawnTeardrops();
     }
   }
+
+
+  reloadPage(): void {
+  // Re-inject the loader before reloading so it's visible instantly
+  const loader = document.createElement('div');
+  loader.id = 'init-loader';
+  loader.innerHTML = '<div id="init-spinner"></div>';
+  loader.style.cssText = `
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  `;
+  document.body.appendChild(loader);
+
+  // Small delay so the loader paints before the reload fires
+  setTimeout(() => {
+    window.location.href = this.surveyUrl;
+  }, 50);
+}
 
   // selectRating(r: RatingOption): void {
   //   this.selectedRating = r;
