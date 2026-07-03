@@ -371,8 +371,78 @@ loadBanner(): void {
   //   });
   // }
 
+  // ======================================================================//
+
   // for positive feedback
   // Add this array of options (you can customize these electric services!)
+  // positiveFeedbackOptions: string[] = [
+  //   'Fast service',
+  //   'Friendly Staff',
+  //   'Clean facility',
+  //   'Clear Staff communication',
+  //   'Clear Billing Explanation',
+  //   'Quick Issue Resolution',
+  //   'Smooth Application Process'
+  // ];
+
+  // // Add this function to handle when a user clicks a feedback button
+  // selectPositiveFeedback(option: string): void {
+  //   // This updates the existing form 'comment' control with the button's text
+  //   this.form.patchValue({
+  //     comment: option
+  //   });
+  // }
+
+  // // ==========================================
+
+
+  // // for negative feedback (keep the comment box and add optional buttons for common complaints)
+  // negativeFeedbackOptions: string[] = [
+  //   'Long Waiting Time',
+  //   'Unfriendly Staff',
+  //   'Unclear Billing',
+  //   'Unresolved Issue',
+  //   'Slow Process',
+  //   'Poor Communication',
+  // ];
+
+  // selectNegativeFeedback(option: string): void {
+  //   this.form.patchValue({ comment: option });
+  // }
+
+
+  // Helper to toggle feedback options in the comma-separated string
+  toggleFeedbackOption(option: string): void {
+    const currentComment = this.form.get('comment')?.value || '';
+    
+    // Split the current string into an array, removing empty spaces
+    let selectedOptions = currentComment
+      .split(', ')
+      .filter((val: string) => val.trim() !== '');
+
+    if (selectedOptions.includes(option)) {
+      // If already selected, remove it
+      selectedOptions = selectedOptions.filter((val: string) => val !== option);
+    } else {
+      // If not selected, add it
+      selectedOptions.push(option);
+    }
+
+    // Join the array back into a string with a comma and a space
+    this.form.patchValue({ comment: selectedOptions.join(', ') });
+  }
+
+  // Helper for the HTML to check if a pill is currently selected
+  isOptionSelected(option: string): boolean {
+    const currentComment = this.form.get('comment')?.value || '';
+    const selectedOptions = currentComment
+      .split(', ')
+      .filter((val: string) => val.trim() !== '');
+      
+    return selectedOptions.includes(option);
+  }
+
+  // for positive feedback
   positiveFeedbackOptions: string[] = [
     'Fast service',
     'Friendly Staff',
@@ -383,18 +453,11 @@ loadBanner(): void {
     'Smooth Application Process'
   ];
 
-  // Add this function to handle when a user clicks a feedback button
   selectPositiveFeedback(option: string): void {
-    // This updates the existing form 'comment' control with the button's text
-    this.form.patchValue({
-      comment: option
-    });
+    this.toggleFeedbackOption(option);
   }
 
-  // ==========================================
-
-
-  // for negative feedback (keep the comment box and add optional buttons for common complaints)
+  // for negative feedback
   negativeFeedbackOptions: string[] = [
     'Long Waiting Time',
     'Unfriendly Staff',
@@ -405,8 +468,10 @@ loadBanner(): void {
   ];
 
   selectNegativeFeedback(option: string): void {
-    this.form.patchValue({ comment: option });
+    this.toggleFeedbackOption(option);
   }
+
+
 
 // ==========================================
   submit(): void {

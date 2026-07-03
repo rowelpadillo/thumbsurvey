@@ -361,12 +361,23 @@
             <h2 class="response-title slide-up">Thank You!</h2>
             <p class="response-sub slide-up delay-1">What contributed most to your satisfaction during your visit?</p>
             
-            <div class="feedback-pills slide-up delay-1">
+            <!-- <div class="feedback-pills slide-up delay-1">
               <button 
                 type="button" 
                 *ngFor="let option of positiveFeedbackOptions"
                 (click)="selectPositiveFeedback(option)"
                 [class.selected]="form.get('comment')?.value === option"
+                class="pill-btn">
+                {{ option }}
+              </button>
+            </div> -->
+
+            <div class="feedback-pills slide-up delay-1">
+              <button 
+                type="button" 
+                *ngFor="let option of positiveFeedbackOptions"
+                (click)="selectPositiveFeedback(option)"
+                [class.selected]="isOptionSelected(option)" 
                 class="pill-btn">
                 {{ option }}
               </button>
@@ -484,12 +495,23 @@
           <h2 class="response-title slide-up">We're Sorry</h2>
           <p class="response-sub slide-up delay-1">Your feedback helps us do better.</p>
 
-          <div class="feedback-pills slide-up delay-1">
+          <!-- <div class="feedback-pills slide-up delay-1">
             <button
               type="button"
               *ngFor="let option of negativeFeedbackOptions"
               (click)="selectNegativeFeedback(option)"
               [class.selected]="form.get('comment')?.value === option"
+              class="pill-btn pill-btn--sorry">
+              {{ option }}
+            </button>
+          </div> -->
+
+          <div class="feedback-pills slide-up delay-1">
+            <button
+              type="button"
+              *ngFor="let option of negativeFeedbackOptions"
+              (click)="selectNegativeFeedback(option)"
+              [class.selected]="isOptionSelected(option)"
               class="pill-btn pill-btn--sorry">
               {{ option }}
             </button>
